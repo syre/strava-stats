@@ -3,6 +3,7 @@ import datetime
 from collections import defaultdict
 
 import numpy as np
+import pandas as pd
 
 from strava_api import get_activities, get_access_token
 
@@ -26,12 +27,16 @@ def save_strava_activities(path='activities.json'):
 
 def load_strava_activities(path='activities.json') -> dict:
     """Loads saved Strava activities from a JSON file."""
-    return json.load(open(path, 'r'))
+    activities = json.load(open(path, 'r'))
+    if not activities:
+        raise ValueError("No activities found in the JSON file.")
+    return activities
 
 def generate_km_per_day_over_year_heatmap_data(activities: list[dict], year=None):
     """Generates heatmap data for kilometers per day over year."""
     if not year:
         year = datetime.datetime.now().year
+
     heatmap_arr = np.zeros((12, 31))
     for activity in activities:
         date = activity["start_date"].split("T")[0]
@@ -46,10 +51,11 @@ def generate_km_per_day_over_year_heatmap_data(activities: list[dict], year=None
     return heatmap_arr
 
 
-def generate_km_year_to_date(activities: list[dict], year=None):
+def generate_distance_for_year(activities: list[dict], year=None):
     """Generates total kilometers for a given year."""
     if not year:
         year = datetime.datetime.now().year
+
     distance_sum = 0
     for activity in activities:
         date = activity["start_date"].split("T")[0]
@@ -60,7 +66,7 @@ def generate_km_year_to_date(activities: list[dict], year=None):
         distance_sum += parsed_distance
     return distance_sum
 
-def generate_streak(activities: list[dict], from_date=None):
+def generate_streak_for_year(activities: list[dict], from_date=None):
     """Generates the streak of consecutive days with activities from a given date."""
     if not from_date:
         from_date = datetime.datetime.now().date()
@@ -82,3 +88,51 @@ def generate_streak(activities: list[dict], from_date=None):
             break
         from_date -= datetime.timedelta(days=1)
     return streak
+
+def generate_num_rides_for_year(activities: list[dict], year=None):
+    """Generates the number of rides for a given year."""
+    if not year:
+        year = datetime.datetime.now().year
+
+    num_rides = 0
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_year = int(date.split("-")[0])
+        if parsed_year != year:
+            continue
+        num_rides += 1
+    return num_rides
+
+def generate_moving_time_for_year(activities: list[dict], year=None):
+    """Generates the moving time for a given year."""
+    if not year:
+        year = datetime.datetime.now().year
+
+    moving_time = 0
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_year = int(date.split("-")[0])
+        if parsed_year != year:
+            continue
+        parsed_moving_time = activity["moving_time"]
+        moving_time += parsed_moving_time
+    return moving_time
+
+def generate_ride_length_binned_over_year_data(activities: list[dict], year=None):
+    """Generates the ride length over a given year binned by length."""
+    if not year:
+        year = datetime.datetime.now().year
+
+    distance_list = []
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_year = int(date.split("-")[0])
+        if parsed_year != year:
+            continue
+        distance = activity["distance"]
+        distance_list.append(distance/1000)
+
+    interval_range = pd.interval_range(start=0, end=max(distance_list), freq=10)
+    binned = pd.cut(distance_list, bins=interval_range, labels=False, retbins=False)
+    print(binned)
+    return binned.codes
