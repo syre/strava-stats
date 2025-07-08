@@ -119,20 +119,33 @@ def generate_moving_time_for_year(activities: list[dict], year=None):
     return moving_time
 
 def generate_ride_length_binned_over_year_data(activities: list[dict], year=None):
-    """Generates the ride length over a given year binned by length."""
+    """Generates binned ride length counts over a given year for bar plotting."""
     if not year:
         year = datetime.datetime.now().year
 
+    # Extract distances in km for the specified year
     distance_list = []
     for activity in activities:
-        date = activity["start_date"].split("T")[0]
-        parsed_year = int(date.split("-")[0])
+        date_str = activity["start_date"].split("T")[0]
+        parsed_year = int(date_str.split("-")[0])
         if parsed_year != year:
             continue
-        distance = activity["distance"]
-        distance_list.append(distance/1000)
+        distance_km = activity["distance"] / 1000
+        distance_list.append(distance_km)
 
-    interval_range = pd.interval_range(start=0, end=max(distance_list), freq=10)
-    binned = pd.cut(distance_list, bins=interval_range, labels=False, retbins=False)
-    print(binned)
-    return binned.codes
+    # Create bins: 0-10, 10-20, ..., 90-100, 100+
+    bins_edges = list(range(0, 101, 10)) + [float('inf')]
+    bin_labels = [f"{i}-{i+10}" for i in range(0, 100, 10)] + ["100+"]
+
+    if not distance_list:
+        return pd.DataFrame({'Distance Bin': bin_labels, 'Count': [0]*len(bin_labels)})
+
+    binned = pd.cut(distance_list, bins=bins_edges, labels=bin_labels, right=False, include_lowest=True)
+    counts = binned.value_counts().sort_index()
+
+    df = pd.DataFrame({
+        "Distance Bin": counts.index,
+        "Count": counts.values
+    })
+
+    return df

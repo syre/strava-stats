@@ -24,6 +24,7 @@ app.layout = html.Div(children=[
     html.H2(children=f'Streak ⚡: {generate_streak_for_year(activities)} days'),
     html.H2(children=f'Rides: {generate_num_rides_for_year(activities)}'),
     html.H2(children=f"Duration: {"%.2f"%(generate_moving_time_for_year(activities)/60/60)} hours"),
+    html.H2(children="Ride length", style={'textAlign': 'center'}),
     dcc.Graph(id="ride-length-binned-over-year-graph", figure=generate_ride_length_binned_over_year_plot(activities)),
     html.H2(children="Distance (KM) by date", style={'textAlign': 'center'}),
     dcc.Graph(
