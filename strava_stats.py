@@ -18,6 +18,8 @@ def save_strava_activities(path='activities.json'):
     # TODO: probably there is a better iteration strategy
     for i in range(1, 999):
         activities = get_activities(access_token, page=i)
+        if not activities:
+            break
         if earliest_date_found == activities[-1]["start_date"]:
             break
         earliest_date_found = activities[-1]["start_date"]
@@ -149,3 +151,7 @@ def generate_ride_length_binned_over_year_data(activities: list[dict], year=None
     })
 
     return df
+
+
+if __name__ == '__main__':
+    save_strava_activities()
