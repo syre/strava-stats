@@ -117,8 +117,8 @@ app.layout = html.Div(children=[
         "Strava Stats 🚲",
         className="text-3xl font-bold text-center w-full mx-auto my-8 text-slate-700"
     ),
-    dcc.Dropdown([2025, 2024, 2023], 2025, id='year-dropdown'),
-    html.Div(id='main-container')]
+    dcc.Dropdown([2025, 2024, 2023], 2025, id='year-dropdown', className="my-8 w-32 mx-auto"),
+    html.Div(id='main-container')],
 )
 
 if __name__ == '__main__':
