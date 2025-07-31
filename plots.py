@@ -3,6 +3,7 @@ import plotly.express as px
 from strava_stats import (
     generate_km_per_day_heatmap_data,
     generate_ride_length_binned_data,
+    generate_monthly_distance_binned_data,
 )
 
 def generate_km_per_day_over_year_heatmap(activities):
@@ -20,7 +21,7 @@ def generate_km_per_day_over_year_heatmap(activities):
     return fig
 
 
-def generate_ride_length_binned_over_year_plot(activities):
+def generate_ride_length_binned_plot(activities):
     data = generate_ride_length_binned_data(activities)
     fig = px.bar(
         data,
@@ -28,6 +29,20 @@ def generate_ride_length_binned_over_year_plot(activities):
         y="Distance Bin",
         orientation="h",
         labels={"Count": "Number of Rides", "Distance Bin": "Distance (km)"},
+    )
+    fig.update_layout(
+        yaxis=dict(categoryorder="array", categoryarray=data["Distance Bin"]),
+        bargap=0.1
+    )
+    return fig
+
+def generate_monthly_distance_binned_plot(activities):
+    data = generate_monthly_distance_binned_data(activities)
+    fig = px.bar(
+        data,
+        x="Months",
+        y="Distance Bin",
+        labels={"Months": "Months", "Distance Bin": "Distance (km)"},
     )
     fig.update_layout(
         yaxis=dict(categoryorder="array", categoryarray=data["Distance Bin"]),

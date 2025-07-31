@@ -3,7 +3,8 @@ import plotly.io as pio
 
 from plots import (
     generate_km_per_day_over_year_heatmap,
-    generate_ride_length_binned_over_year_plot
+    generate_ride_length_binned_plot,
+    generate_monthly_distance_binned_plot,
 )
 from strava_stats import (
     load_strava_activities,
@@ -40,7 +41,7 @@ app.layout = html.Div(children=[
         className="max-w-7xl mx-auto px-4 mb-8 rounded shadow"
     ),
     html.Div(
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto px-4 mb-12",
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 mb-12",
         children=[
             html.Div(
                 className="grid grid-cols-1 md:grid-cols-2 gap-4",
@@ -77,7 +78,18 @@ app.layout = html.Div(children=[
                     html.H2("Ride Length", className="text-lg font-semibold text-center text-red-700 mb-4"),
                     dcc.Graph(
                         id="ride-length-binned-over-year-graph",
-                        figure=generate_ride_length_binned_over_year_plot(activities),
+                        figure=generate_ride_length_binned_plot(activities),
+                        style={"height": "300px"}
+                    )
+                ],
+                className="bg-white p-4 rounded shadow overflow-hidden"
+            ),
+            html.Div(
+                children=[
+                    html.H2("Monthly Distance", className="text-lg font-semibold text-center text-red-700 mb-4"),
+                    dcc.Graph(
+                        id="monthly-distance-graph-graph",
+                        figure=generate_monthly_distance_binned_plot(activities),
                         style={"height": "300px"}
                     )
                 ],

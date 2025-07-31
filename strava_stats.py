@@ -150,6 +150,16 @@ def generate_ride_length_binned_data(activities: list[dict]):
 
     return df
 
+def generate_monthly_distance_binned_data(activities: list[dict]):
+    """Generates binned montly distance counts for bar plotting."""
+
+    df = pd.DataFrame({
+        "Distance Bin": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+        "Months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    })
+
+    return df
+
 
 if __name__ == '__main__':
     save_strava_activities()
