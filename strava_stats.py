@@ -1,6 +1,7 @@
 import json
 import datetime
 from collections import defaultdict
+from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -27,24 +28,34 @@ def save_strava_activities(path='activities.json'):
 
     json.dump(activities_list, open(path, 'w'))
 
-def load_strava_activities(path='activities.json') -> dict:
+def load_strava_activities(path='activities.json') -> list[dict]:
     """Loads saved Strava activities from a JSON file."""
     activities = json.load(open(path, 'r'))
     if not activities:
         raise ValueError("No activities found in the JSON file.")
     return activities
 
-def generate_km_per_day_over_year_heatmap_data(activities: list[dict], year=None):
-    """Generates heatmap data for kilometers per day over year."""
+def filter_strava_activities(activities: list[dict], year: Optional[int] = None) -> list[dict]:
     if not year:
         year = datetime.datetime.now().year
 
-    heatmap_arr = np.zeros((12, 31))
+    filtered_activities = []
     for activity in activities:
         date = activity["start_date"].split("T")[0]
         parsed_year = int(date.split("-")[0])
         if parsed_year != year:
             continue
+        filtered_activities.append(activity)
+
+    return filtered_activities
+
+def generate_km_per_day_heatmap_data(activities: list[dict]):
+    """Generates heatmap data for kilometers per day."""
+
+    heatmap_arr = np.zeros((12, 31))
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+
         parsed_distance = activity["distance"] / 1000
         parsed_month = int(date.split("-")[1]) - 1
         parsed_day = int(date.split("-")[2])
@@ -53,23 +64,16 @@ def generate_km_per_day_over_year_heatmap_data(activities: list[dict], year=None
     return heatmap_arr
 
 
-def generate_distance_for_year(activities: list[dict], year=None):
-    """Generates total kilometers for a given year."""
-    if not year:
-        year = datetime.datetime.now().year
-
+def calculate_total_distance(activities: list[dict]):
+    """Calculates total distance in kilometers."""
     distance_sum = 0
     for activity in activities:
-        date = activity["start_date"].split("T")[0]
-        parsed_year = int(date.split("-")[0])
-        if parsed_year != year:
-            continue
         parsed_distance = activity["distance"] / 1000
         distance_sum += parsed_distance
     return distance_sum
 
-def generate_streak_for_year(activities: list[dict], from_date=None):
-    """Generates the streak of consecutive days with activities from a given date."""
+def calculate_streak(activities: list[dict], from_date=None):
+    """Calculates the streak of consecutive days with activities from a given date."""
     if not from_date:
         from_date = datetime.datetime.now().date()
 
@@ -91,47 +95,41 @@ def generate_streak_for_year(activities: list[dict], from_date=None):
         from_date -= datetime.timedelta(days=1)
     return streak
 
-def generate_num_rides_for_year(activities: list[dict], year=None):
-    """Generates the number of rides for a given year."""
-    if not year:
-        year = datetime.datetime.now().year
+def calculate_num_rides(activities: list[dict]):
+    """Calculates the number of rides."""
+    return len(activities)
 
-    num_rides = 0
+def calculate_biggest_ride(activities: list[dict]):
+    """Calculates the biggest ride"""
+
+    biggest_ride_distance = 0
     for activity in activities:
-        date = activity["start_date"].split("T")[0]
-        parsed_year = int(date.split("-")[0])
-        if parsed_year != year:
-            continue
-        num_rides += 1
-    return num_rides
+        biggest_ride_distance = max(biggest_ride_distance, activity["distance"])
 
-def generate_moving_time_for_year(activities: list[dict], year=None):
-    """Generates the moving time for a given year."""
-    if not year:
-        year = datetime.datetime.now().year
+    return biggest_ride_distance
+
+def calculate_longest_ride_for_year(activities: list[dict]):
+    """Calculates the longest ride."""
+    longest_ride = 0
+    for activity in activities:
+        longest_ride = max(longest_ride, activity["moving_time"])
+    return longest_ride
+
+def calculate_moving_time(activities: list[dict]):
+    """Calculates the moving time."""
 
     moving_time = 0
     for activity in activities:
-        date = activity["start_date"].split("T")[0]
-        parsed_year = int(date.split("-")[0])
-        if parsed_year != year:
-            continue
         parsed_moving_time = activity["moving_time"]
         moving_time += parsed_moving_time
     return moving_time
 
-def generate_ride_length_binned_over_year_data(activities: list[dict], year=None):
-    """Generates binned ride length counts over a given year for bar plotting."""
-    if not year:
-        year = datetime.datetime.now().year
+def generate_ride_length_binned_data(activities: list[dict]):
+    """Generates binned ride length counts for bar plotting."""
 
     # Extract distances in km for the specified year
     distance_list = []
     for activity in activities:
-        date_str = activity["start_date"].split("T")[0]
-        parsed_year = int(date_str.split("-")[0])
-        if parsed_year != year:
-            continue
         distance_km = activity["distance"] / 1000
         distance_list.append(distance_km)
 
