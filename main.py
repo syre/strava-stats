@@ -13,7 +13,7 @@ from strava_stats import (
     calculate_num_rides,
     calculate_moving_time,
     calculate_biggest_ride,
-    calculate_longest_ride_for_year
+    calculate_longest_ride
 )
 from templates import load_reds_template
 
@@ -63,7 +63,7 @@ app.layout = html.Div(children=[
                     ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                     html.Div([
                         html.Div("Longest Ride", className="text-lg font-semibold mb-2 text-red-700"),
-                        html.Div(f"{calculate_longest_ride_for_year(activities)/60/60:.2f} hours", className="text-sm text-gray-700")
+                        html.Div(f"{calculate_longest_ride(activities)/60/60:.2f} hours", className="text-sm text-gray-700")
                     ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                     html.Div([
                         html.Div("Biggest Ride", className="text-lg font-semibold mb-2 text-red-700"),

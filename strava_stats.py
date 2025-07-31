@@ -8,7 +8,7 @@ import pandas as pd
 
 from strava_api import get_activities, get_access_token
 
-def save_strava_activities(path='activities.json'):
+def save_strava_activities(path: str = 'activities.json'):
     """ Save Strava activities to a JSON file."""
     access_token = get_access_token()
     activities_list = []
@@ -72,7 +72,7 @@ def calculate_total_distance(activities: list[dict]):
         distance_sum += parsed_distance
     return distance_sum
 
-def calculate_streak(activities: list[dict], from_date=None):
+def calculate_streak(activities: list[dict], from_date: Optional[datetime.date] = None):
     """Calculates the streak of consecutive days with activities from a given date."""
     if not from_date:
         from_date = datetime.datetime.now().date()
@@ -108,7 +108,7 @@ def calculate_biggest_ride(activities: list[dict]):
 
     return biggest_ride_distance
 
-def calculate_longest_ride_for_year(activities: list[dict]):
+def calculate_longest_ride(activities: list[dict]):
     """Calculates the longest ride."""
     longest_ride = 0
     for activity in activities:
