@@ -35,7 +35,7 @@ def load_strava_activities(path='activities.json') -> list[dict]:
         raise ValueError("No activities found in the JSON file.")
     return activities
 
-def filter_strava_activities(activities: list[dict], year: Optional[int] = None) -> list[dict]:
+def filter_strava_activities_by_year(activities: list[dict], year: Optional[int] = None) -> list[dict]:
     if not year:
         year = datetime.datetime.now().year
 

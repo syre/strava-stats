@@ -7,7 +7,7 @@ from plots import (
 )
 from strava_stats import (
     load_strava_activities,
-    filter_strava_activities,
+    filter_strava_activities_by_year,
     calculate_total_distance,
     calculate_streak,
     calculate_num_rides,
@@ -19,7 +19,7 @@ from templates import load_reds_template
 
 
 activities = load_strava_activities()
-activities = filter_strava_activities(activities)
+activities = filter_strava_activities_by_year(activities)
 pio.templates["reds"] = load_reds_template()
 pio.templates.default = "reds"
 
@@ -28,7 +28,7 @@ app.title = "Strava Stats"
 
 
 app.layout = html.Div(children=[
-    html.H1(children='Strava Stats', className="text-3xl font-bold justify-self-center w-100 mx-auto my-8 text-slate-700"),
+    html.H1(children='Strava Stats', className="text-3xl font-bold justify-self-center text-center w-100 mx-auto my-8 text-slate-700"),
     html.Div(
         children=[
             html.Div(
@@ -78,7 +78,7 @@ app.layout = html.Div(children=[
     ),
     html.Div(
         children=[
-            html.H2(children="Distance (KM) by date", className="font-bold justify-self-center w-100 mx-auto text-slate-700"),
+            html.H2(children="Distance (KM) by date", className="font-bold justify-self-center text-center w-100 mx-auto text-slate-700"),
             dcc.Graph(
                 id='km-per-day-over-year-graph',
                 figure=generate_km_per_day_over_year_heatmap(activities),
@@ -87,7 +87,7 @@ app.layout = html.Div(children=[
     ),
     html.Div(
         children=[
-            html.H2(children="Ride length", className="font-bold justify-self-center w-100 mx-auto text-slate-700"),
+            html.H2(children="Ride length", className="font-bold justify-self-center text-center w-100 mx-auto text-slate-700"),
             dcc.Graph(id="ride-length-binned-over-year-graph", figure=generate_ride_length_binned_over_year_plot(activities)),
         ]
     ),
