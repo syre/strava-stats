@@ -124,6 +124,21 @@ def calculate_moving_time(activities: list[dict]):
         moving_time += parsed_moving_time
     return moving_time
 
+def calculate_elevation(activities: list[dict]):
+    elevation = 0
+    for activity in activities:
+        parsed_elevation = activity["total_elevation_gain"]
+        elevation += parsed_elevation
+    return elevation
+
+def calculate_ride_days(activities: list[dict]):
+    parsed_dates_dict = {}
+
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_dates_dict[date] = True
+    return len(parsed_dates_dict.keys())
+
 def generate_ride_length_binned_data(activities: list[dict]):
     """Generates binned ride length counts for bar plotting."""
 
