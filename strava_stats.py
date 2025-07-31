@@ -84,7 +84,7 @@ def calculate_streak(activities: list[dict], from_date: Optional[datetime.date] 
         date = activity["start_date"].split("T")[0]
         parsed_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         if parsed_date > from_date:
-            break
+            continue
         parsed_dates_dict[date] = True
 
     while True:
@@ -153,8 +153,14 @@ def generate_ride_length_binned_data(activities: list[dict]):
 def generate_monthly_distance_binned_data(activities: list[dict]):
     """Generates binned montly distance counts for bar plotting."""
 
+    distance_bins = [0] * 12
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_month = int(date.split("-")[1])
+        distance_bins[parsed_month-1] += activity["distance"] / 1000
+
     df = pd.DataFrame({
-        "Distance Bin": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+        "Distance Bin": distance_bins,
         "Months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     })
 

@@ -51,7 +51,7 @@ app.layout = html.Div(children=[
                         html.Div(f'{calculate_total_distance(activities):.2f} KM', className="text-sm text-gray-700"),
                     ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                     html.Div([
-                        html.Div("Streak ⚡", className="text-lg font-semibold mb-2 text-red-700"),
+                        html.Div("Longest Streak", className="text-lg font-semibold mb-2 text-red-700"),
                         html.Div(f"{calculate_streak(activities)} days", className="text-sm text-gray-700"),
                     ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                     html.Div([
@@ -75,7 +75,7 @@ app.layout = html.Div(children=[
 
             html.Div(
                 children=[
-                    html.H2("Ride Length", className="text-lg font-semibold text-center text-red-700 mb-4"),
+                    html.H2("Ride Count By Length", className="text-lg font-semibold text-center text-red-700 mb-4"),
                     dcc.Graph(
                         id="ride-length-binned-over-year-graph",
                         figure=generate_ride_length_binned_plot(activities),

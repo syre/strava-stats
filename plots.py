@@ -18,6 +18,8 @@ def generate_km_per_day_over_year_heatmap(activities):
         color_continuous_scale="reds"
     )
     fig.update_xaxes(side="top", type="category")
+    fig.update_coloraxes(showscale=False)
+    fig.update_layout(yaxis_title=None, margin_pad=5)
     return fig
 
 
@@ -46,6 +48,7 @@ def generate_monthly_distance_binned_plot(activities):
     )
     fig.update_layout(
         yaxis=dict(categoryorder="array", categoryarray=data["Distance Bin"]),
+        xaxis_title=None,
         bargap=0.1
     )
     return fig
