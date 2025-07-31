@@ -30,5 +30,6 @@ Replace YOUR_CLIENT_ID, YOUR_CLIENT_SECRET, and YOUR_CODE with your actual value
 ## TODO
 - Implement a filter toggling different sports
 - Use a real relational database to store and analyze data
+- Add tests
 - Containerize it
 - More visualizations

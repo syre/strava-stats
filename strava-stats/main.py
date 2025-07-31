@@ -7,7 +7,6 @@ from plots import (
     generate_monthly_distance_binned_plot,
 )
 from strava_stats import (
-    load_strava_activities,
     filter_strava_activities_by_year,
     calculate_total_distance,
     calculate_streak,
@@ -18,6 +17,7 @@ from strava_stats import (
     calculate_elevation,
     calculate_ride_days,
 )
+from strava_api import load_strava_activities
 from templates import load_reds_template
 
 pio.templates["reds"] = load_reds_template()

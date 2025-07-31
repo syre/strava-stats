@@ -1,39 +1,9 @@
-import json
 import datetime
 from collections import defaultdict
 from typing import Optional
 
 import numpy as np
 import pandas as pd
-
-from strava_api import get_activities, get_access_token
-
-def save_strava_activities(path: str = 'activities.json'):
-    """ Save Strava activities to a JSON file."""
-    access_token = get_access_token()
-    activities_list = []
-    utc_today = datetime.datetime.now(datetime.UTC)
-    earliest_date_found = utc_today.strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    # iterates over pages until we get the earliest date found
-    # TODO: probably there is a better iteration strategy
-    for i in range(1, 999):
-        activities = get_activities(access_token, page=i)
-        if not activities:
-            break
-        if earliest_date_found == activities[-1]["start_date"]:
-            break
-        earliest_date_found = activities[-1]["start_date"]
-        activities_list += activities
-
-    json.dump(activities_list, open(path, 'w'))
-
-def load_strava_activities(path='activities.json') -> list[dict]:
-    """Loads saved Strava activities from a JSON file."""
-    activities = json.load(open(path, 'r'))
-    if not activities:
-        raise ValueError("No activities found in the JSON file.")
-    return activities
 
 def filter_strava_activities_by_year(activities: list[dict], year: Optional[int] = None) -> list[dict]:
     if not year:
@@ -180,7 +150,3 @@ def generate_monthly_distance_binned_data(activities: list[dict]):
     })
 
     return df
-
-
-if __name__ == '__main__':
-    save_strava_activities()
