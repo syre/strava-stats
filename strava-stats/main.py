@@ -30,7 +30,7 @@ app.title = "Strava Stats 🚲"
     Output('main-container', 'children'),
     Input('year-dropdown', 'value')
 )
-def update_output(value):
+def update_main_container(value):
     activities = load_strava_activities()
     activities = filter_strava_activities_by_year(activities, year=value)
     return [
