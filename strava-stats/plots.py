@@ -19,7 +19,7 @@ def generate_km_per_day_over_year_heatmap(activities):
     )
     fig.update_xaxes(side="top", type="category")
     fig.update_coloraxes(showscale=False)
-    fig.update_layout(yaxis_title=None, margin_pad=5)
+    fig.update_layout(xaxis_title=None, yaxis_title=None, margin_pad=5)
     return fig
 
 

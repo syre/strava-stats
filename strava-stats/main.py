@@ -62,7 +62,7 @@ def update_main_container(year):
                                     html.Div(f'{calculate_total_distance(activities):.2f} KM', className="text-sm text-gray-700"),
                                 ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                                 html.Div([
-                                    html.Div("Longest Streak", className="text-lg font-semibold mb-2 text-red-700"),
+                                    html.Div("Current Streak", className="text-lg font-semibold mb-2 text-red-700"),
                                     html.Div(f"{calculate_streak(activities)} days", className="text-sm text-gray-700"),
                                 ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                                 html.Div([
