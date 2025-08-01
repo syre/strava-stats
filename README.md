@@ -2,7 +2,9 @@
 # Strava Stats
 
 ## Overview
-Strava Stats is a Python script using the Strava API and Plotly Dash to generate various statistics and visualizations based on your Strava activities. It provides insights into your biking metrics.
+If you didn't record a ride on Strava, did it even take place? 🤪
+
+Strava Stats is a Python script using the Strava API and Plotly Dash to show an easily available dashboard of your yearly and current Strava Activities providing insights into your biking metrics.
 
 ## Requirements
 A .env file with the following variables:
