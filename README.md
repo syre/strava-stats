@@ -8,13 +8,13 @@ Strava Stats is a Python script using the Strava API and Plotly Dash to show an 
 
 ## Requirements
 A .env file with the following variables:
-- STRAVA_CLIENT_ID
-- STRAVA_CLIENT_SECRET
-- STRAVA_REFRESH_TOKEN
+- `STRAVA_CLIENT_ID`
+- `STRAVA_CLIENT_SECRET`
+- `STRAVA_REFRESH_TOKEN`
 
-Fetch the STRAVA_CLIENT_ID and STRAVA_CLIENT_SECRET from https://www.strava.com/settings/api
+Fetch the `STRAVA_CLIENT_ID` and `STRAVA_CLIENT_SECRET` from https://www.strava.com/settings/api
 
-THE STRAVA_REFRESH_TOKEN can be obtained by running the following in a browser:
+THE `STRAVA_REFRESH_TOKEN` can be obtained by running the following in a browser:
 ```
 https://www.strava.com/oauth/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=activity:read_all
 ```
@@ -27,7 +27,7 @@ curl -X POST \
   -d code=YOUR_CODE \
   -d grant_type=authorization_code
 ```
-Replace YOUR_CLIENT_ID, YOUR_CLIENT_SECRET, and YOUR_CODE with your actual values.
+Replace `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET`, and `YOUR_CODE` with your actual values.
 
 ## TODO
 - Implement a filter toggling different sports
