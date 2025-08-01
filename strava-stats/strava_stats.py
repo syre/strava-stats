@@ -52,7 +52,7 @@ def calculate_total_distance(activities: list[dict]):
         distance_sum += parsed_distance
     return distance_sum
 
-def calculate_streak(activities: list[dict], from_date: Optional[datetime.date] = None):
+def calculate_streak_from_date(activities: list[dict], from_date: Optional[datetime.date] = None):
     """Calculates the streak of consecutive days with activities from a given date."""
     if not from_date:
         from_date = datetime.datetime.now().date()

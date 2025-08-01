@@ -12,7 +12,7 @@ from strava_stats import (
     get_strava_activities_years,
     filter_strava_activities_by_year,
     calculate_total_distance,
-    calculate_streak,
+    calculate_streak_from_date,
     calculate_num_rides,
     calculate_moving_time,
     calculate_biggest_ride,
@@ -63,7 +63,7 @@ def update_main_container(year):
                                 ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                                 html.Div([
                                     html.Div("Current Streak", className="text-lg font-semibold mb-2 text-red-700"),
-                                    html.Div(f"{calculate_streak(activities)} days", className="text-sm text-gray-700"),
+                                    html.Div(f"{calculate_streak_from_date(activities)} days", className="text-sm text-gray-700"),
                                 ], className="p-4 shadow rounded flex flex-col justify-center text-center"),
                                 html.Div([
                                     html.Div("Rides", className="text-lg font-semibold mb-2 text-red-700"),
