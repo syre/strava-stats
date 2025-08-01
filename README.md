@@ -1,6 +1,6 @@
 
 # Strava Stats
-
+![Strava Stats image](https://github.com/syre/strava-stats/blob/main/images/strava_stats.png?raw=true)
 ## Overview
 If you didn't record a ride on Strava, did it even take place? 🤪
 
