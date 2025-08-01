@@ -23,7 +23,7 @@ def generate_km_per_day_over_year_heatmap(activities: list[dict]):
     fig.update_traces(text=zero_entry_text, texttemplate="%{text}")
     fig.update_xaxes(side="top", type="category")
     fig.update_coloraxes(showscale=False)
-    fig.update_layout(xaxis_title=None, yaxis_title=None, margin_pad=5)
+    fig.update_layout(xaxis_title=None, yaxis_title=None, margin_pad=5, margin=dict(l=10, r=10, t=10, b=10))
 
     return fig
 
@@ -41,7 +41,8 @@ def generate_ride_length_binned_plot(activities: list[dict]):
 
     fig.update_layout(
         yaxis=dict(categoryorder="array", categoryarray=data["Distance Bin"]),
-        bargap=0.1
+        bargap=0.1,
+        margin=dict(l=5, r=5, t=5, b=5),
     )
 
     return fig
@@ -59,7 +60,8 @@ def generate_monthly_distance_binned_plot(activities: list[dict]):
     fig.update_layout(
         yaxis=dict(categoryorder="array", categoryarray=data["Distance Bin"]),
         xaxis_title=None,
-        bargap=0.1
+        bargap=0.1,
+        margin=dict(l=5, r=5, t=5, b=5),
     )
 
     return fig

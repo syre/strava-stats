@@ -123,14 +123,24 @@ def update_main_container(year, activity_type):
 ]
 
 app.layout = html.Div(children=[
-    html.H1(
-        "Strava Stats 🚲",
-        className="text-3xl font-bold text-center w-full mx-auto my-8 text-slate-700"
+    html.Div(
+        className="max-w-7xl mx-auto px-4 mb-8",
+        children=[
+            html.H1(
+                "Strava Stats 🚲",
+                className="text-3xl font-bold text-slate-700 text-center mb-6"
+            ),
+            html.Div(
+                className="flex justify-center gap-4",
+                children=[
+                    dcc.Dropdown(AVAILABLE_YEARS, CURRENT_YEAR, id='year-dropdown', className="w-32", placeholder="Year"),
+                    dcc.Dropdown(["Ride", "Run", "Hike"], "Ride", id='type-dropdown', className="w-32", placeholder="Type", disabled=True),
+                ]
+            )
+        ]
     ),
-    dcc.Dropdown(AVAILABLE_YEARS, CURRENT_YEAR, id='year-dropdown', className="my-8 w-32 mx-auto", placeholder="Year"),
-    dcc.Dropdown(["Ride", "Run", "Hike"], "Ride", id='type-dropdown', className="my-8 w-32 mx-auto", placeholder="Type"),
-    html.Div(id='main-container')],
-)
+    html.Div(id='main-container')
+])
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
