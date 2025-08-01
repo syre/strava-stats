@@ -1,12 +1,12 @@
 # Strava Stats
+If you didn't record a ride on Strava, did it even take place? 🤪
+
+Strava Stats is a simple Python app using the Strava API and Plotly Dash to show a dashboard of your yearly and current Strava Activities providing insights into your riding metrics.
 <p align="center">
   <picture align="center">
     <img alt="Shows a dashboard of Strava Stats." src="https://github.com/syre/strava-stats/blob/main/images/strava_stats.png?raw=true">
   </picture>
 </p>
-If you didn't record a ride on Strava, did it even take place? 🤪
-
-Strava Stats is a simple Python app using the Strava API and Plotly Dash to show a dashboard of your yearly and current Strava Activities providing insights into your riding metrics.
 
 ## Requirements
 A .env file with the following variables:
