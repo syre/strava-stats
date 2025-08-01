@@ -15,7 +15,7 @@ def get_strava_activities_years(activities: list[dict]) -> list[int]:
     return list(years)
 
 
-def filter_strava_activities_by_year(activities: list[dict], year: Optional[int] = None) -> list[dict]:
+def filter_strava_activities(activities: list[dict], activity_type: Optional[str], year: Optional[int] = None) -> list[dict]:
     if not year:
         year = datetime.datetime.now().year
 
@@ -24,6 +24,8 @@ def filter_strava_activities_by_year(activities: list[dict], year: Optional[int]
         date = activity["start_date"].split("T")[0]
         parsed_year = int(date.split("-")[0])
         if parsed_year != year:
+            continue
+        if activity_type and activity_type != activity["type"]:
             continue
         filtered_activities.append(activity)
 

@@ -10,7 +10,7 @@ from plots import (
 )
 from strava_stats import (
     get_strava_activities_years,
-    filter_strava_activities_by_year,
+    filter_strava_activities,
     calculate_total_distance,
     calculate_streak_from_date,
     calculate_num_rides,
@@ -35,11 +35,14 @@ CURRENT_YEAR = datetime.now().date().year
 
 @callback(
     Output('main-container', 'children'),
-    Input('year-dropdown', 'value')
+    [
+        Input('year-dropdown', 'value'),
+        Input('type-dropdown', 'value'),
+    ]
 )
-def update_main_container(year):
+def update_main_container(year, activity_type):
     activities = load_strava_activities()
-    activities = filter_strava_activities_by_year(activities, year=year)
+    activities = filter_strava_activities(activities, year=year, activity_type=activity_type)
     return [
         html.Div(
             id='main-container',
@@ -125,6 +128,7 @@ app.layout = html.Div(children=[
         className="text-3xl font-bold text-center w-full mx-auto my-8 text-slate-700"
     ),
     dcc.Dropdown(AVAILABLE_YEARS, CURRENT_YEAR, id='year-dropdown', className="my-8 w-32 mx-auto", placeholder="Year"),
+    dcc.Dropdown(["Ride", "Run", "Hike"], "Ride", id='type-dropdown', className="my-8 w-32 mx-auto", placeholder="Type"),
     html.Div(id='main-container')],
 )
 
