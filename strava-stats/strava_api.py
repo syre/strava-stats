@@ -2,6 +2,7 @@ import os
 import datetime
 import requests
 import json
+import pathlib
 
 from dotenv import load_dotenv
 
@@ -62,7 +63,7 @@ def save_strava_activities(path: str = 'activities.json'):
 
 def load_strava_activities(path='activities.json') -> list[dict]:
     """Loads saved Strava activities from a JSON file."""
-    activities = json.load(open(path, 'r'))
+    activities = json.load(open(pathlib.Path(__file__).parent.resolve() / path, 'r'))
     if not activities:
         raise ValueError("No activities found in the JSON file.")
     return activities
