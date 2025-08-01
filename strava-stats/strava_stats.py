@@ -5,6 +5,16 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
+def get_strava_activities_years(activities: list[dict]) -> list[int]:
+    years = set()
+    for activity in activities:
+        date = activity["start_date"].split("T")[0]
+        parsed_year = int(date.split("-")[0])
+        years.add(parsed_year)
+
+    return list(years)
+
+
 def filter_strava_activities_by_year(activities: list[dict], year: Optional[int] = None) -> list[dict]:
     if not year:
         year = datetime.datetime.now().year

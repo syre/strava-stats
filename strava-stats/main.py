@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from dash import Dash, html, dcc, Input, Output, callback
 import plotly.io as pio
 
@@ -7,6 +9,7 @@ from plots import (
     generate_monthly_distance_binned_plot,
 )
 from strava_stats import (
+    get_strava_activities_years,
     filter_strava_activities_by_year,
     calculate_total_distance,
     calculate_streak,
@@ -26,13 +29,17 @@ pio.templates.default = "reds"
 app = Dash(external_scripts=["https://unpkg.com/@tailwindcss/browser@4"])
 app.title = "Strava Stats 🚲"
 
+activities = load_strava_activities()
+AVAILABLE_YEARS = sorted(get_strava_activities_years(activities), key=str, reverse=True)
+CURRENT_YEAR = datetime.now().date().year
+
 @callback(
     Output('main-container', 'children'),
     Input('year-dropdown', 'value')
 )
-def update_main_container(value):
+def update_main_container(year):
     activities = load_strava_activities()
-    activities = filter_strava_activities_by_year(activities, year=value)
+    activities = filter_strava_activities_by_year(activities, year=year)
     return [
         html.Div(
             id='main-container',
@@ -117,7 +124,7 @@ app.layout = html.Div(children=[
         "Strava Stats 🚲",
         className="text-3xl font-bold text-center w-full mx-auto my-8 text-slate-700"
     ),
-    dcc.Dropdown([2025, 2024, 2023], 2025, id='year-dropdown', className="my-8 w-32 mx-auto"),
+    dcc.Dropdown(AVAILABLE_YEARS, CURRENT_YEAR, id='year-dropdown', className="my-8 w-32 mx-auto"),
     html.Div(id='main-container')],
 )
 
