@@ -1,6 +1,6 @@
 import plotly.express as px
 import numpy as np
-from strava_stats import (
+from strava_stats.strava_stats import (
     generate_km_per_day_heatmap_data,
     generate_ride_length_binned_data,
     generate_monthly_distance_binned_data,

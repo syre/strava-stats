@@ -3,12 +3,12 @@ from datetime import datetime
 from dash import Dash, html, dcc, Input, Output, callback
 import plotly.io as pio
 
-from plots import (
+from strava_stats.plots import (
     generate_km_per_day_over_year_heatmap,
     generate_ride_length_binned_plot,
     generate_monthly_distance_binned_plot,
 )
-from strava_stats import (
+from strava_stats.strava_stats import (
     get_strava_activities_years,
     filter_strava_activities,
     calculate_total_distance,
@@ -20,8 +20,8 @@ from strava_stats import (
     calculate_elevation,
     calculate_ride_days,
 )
-from strava_api import load_strava_activities
-from templates import load_reds_template
+from strava_stats.strava_api import load_strava_activities
+from strava_stats.templates import load_reds_template
 
 pio.templates["reds"] = load_reds_template()
 pio.templates.default = "reds"

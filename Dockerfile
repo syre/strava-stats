@@ -29,4 +29,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 ENTRYPOINT []
 
 EXPOSE 8050/tcp
-CMD ["python", "strava-stats/main.py"]
+
+CMD ["gunicorn", "-b", "0.0.0.0:8050", "strava_stats.main:app"]
