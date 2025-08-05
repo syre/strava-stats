@@ -41,7 +41,7 @@ def get_activities(access_token: str, page=1):
     json_response = response.json()
     return json_response
 
-def save_strava_activities(path: str = 'activities.json'):
+def save_strava_activities(path: str = 'strava_stats/data/activities.json'):
     """Saves Strava activities to a JSON file."""
     access_token = get_access_token()
     activities_list = []
@@ -61,13 +61,9 @@ def save_strava_activities(path: str = 'activities.json'):
 
     json.dump(activities_list, open(path, 'w'))
 
-def load_strava_activities(path='activities.json') -> list[dict]:
+def load_strava_activities(path='strava_stats/data/activities.json') -> list[dict]:
     """Loads saved Strava activities from a JSON file."""
     activities = json.load(open(pathlib.Path(__file__).parent.resolve() / path, 'r'))
     if not activities:
         raise ValueError("No activities found in the JSON file.")
     return activities
-
-
-if __name__ == '__main__':
-    save_strava_activities()

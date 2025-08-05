@@ -1,0 +1,22 @@
+services:
+  strava-stats-app:
+    image: strava-stats
+    container_name: strava-stats-app
+    restart: unless-stopped
+    ports:
+      - "8000:8050"
+    volumes:
+      - strava-stats-data:/app
+
+  strava-stats-sync:
+    image: strava-stats
+    container_name: strava-stats-sync
+    working_dir: /app/strava-stats-app/data/
+    command: ["python", "-m", "strava_stats.scripts.sync_strava_activities"]
+    depends_on:
+      - strava-stats-app
+    volumes:
+      - strava-stats-data:/app/strava-stats-app/data
+
+volumes:
+  strava-stats-data:
