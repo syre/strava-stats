@@ -6,17 +6,29 @@ services:
     ports:
       - "8000:8050"
     volumes:
-      - strava-stats-data:/app
+      - strava-stats-data:/app/strava_stats/data
 
   strava-stats-sync:
     image: strava-stats
     container_name: strava-stats-sync
-    working_dir: /app/strava-stats-app/data/
+    working_dir: /app
     command: ["python", "-m", "strava_stats.scripts.sync_strava_activities"]
     depends_on:
       - strava-stats-app
     volumes:
-      - strava-stats-data:/app/strava-stats-app/data
+      - strava-stats-data:/app/strava_stats/data
+
+#  strava-stats-debug:
+#    image: strava-stats
+#    container_name: strava-stats-debug
+#    working_dir: /app
+#    tty: true
+#    stdin_open: true
+#    volumes:
+#      - strava-stats-data:/app/strava_stats/data
+#    entrypoint: /bin/bash
+#    depends_on:
+#      - strava-stats-app
 
 volumes:
   strava-stats-data:
