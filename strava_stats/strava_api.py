@@ -36,7 +36,7 @@ def get_activities(access_token: str, page=1):
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-    response = requests.get(ACTIVITIES_ENDPOINT, headers=headers, params={'page': page})
+    response = requests.get(ACTIVITIES_ENDPOINT, headers=headers, params={'page': page, 'per_page': 200})
     response.raise_for_status()
     json_response = response.json()
     return json_response
