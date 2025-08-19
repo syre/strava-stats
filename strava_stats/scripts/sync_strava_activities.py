@@ -18,7 +18,7 @@ def sync_strava_activities():
 sync_strava_activities()
 
 # And then every 3 hours
-schedule.every(3).hour.do(sync_strava_activities)
+schedule.every(3).hours.do(sync_strava_activities)
 while True:
     schedule.run_pending()
     time.sleep(1)
