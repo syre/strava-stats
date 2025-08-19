@@ -7,7 +7,7 @@ import schedule
 from strava_stats.strava_api import save_strava_activities
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(format='%(asctime)s %(message)s', stream=sys.stdout, level=logging.INFO)
 
 def sync_strava_activities():
     logging.info("syncing strava activities")
