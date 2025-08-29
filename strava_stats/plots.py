@@ -19,7 +19,7 @@ def generate_km_per_day_over_year_heatmap(activities: list[dict]):
         color_continuous_scale="reds"
     )
 
-    zero_entry_text = np.where(data == 0, "", np.round(data, 2).astype(str))
+    zero_entry_text = np.where(np.logical_or(data == 0, np.isnan(data)), "", np.round(data, 2).astype(str))
     fig.update_traces(text=zero_entry_text, texttemplate="%{text}")
     fig.update_xaxes(side="top", type="category")
     fig.update_coloraxes(showscale=False)

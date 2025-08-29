@@ -1,6 +1,7 @@
 import datetime
 from collections import defaultdict
 from typing import Optional
+import calendar
 
 import numpy as np
 import pandas as pd
@@ -35,14 +36,25 @@ def generate_km_per_day_heatmap_data(activities: list[dict]):
     """Generates heatmap data for kilometers per day."""
 
     heatmap_arr = np.zeros((12, 31))
+    year = None
     for activity in activities:
         date = activity["start_date"].split("T")[0]
 
         parsed_distance = activity["distance"] / 1000
         parsed_month = int(date.split("-")[1]) - 1
         parsed_day = int(date.split("-")[2])
-
+        # set year initially
+        if not year:
+            parsed_year = int(date.split("-")[0]) - 1
+            year = parsed_year
         heatmap_arr[parsed_month, parsed_day - 1] += parsed_distance
+
+    # Mask invalid days with NaN for the year
+    if year:
+        for month in range(12):
+            days_in_month = calendar.monthrange(year, month+1)[1]
+            heatmap_arr[month, days_in_month:] = np.nan
+
     return heatmap_arr
 
 
