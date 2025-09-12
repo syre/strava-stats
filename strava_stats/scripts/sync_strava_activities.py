@@ -2,7 +2,7 @@ import time
 import logging
 import sys
 
-import requests
+from requests.exceptions import HTTPError
 import schedule
 
 from strava_stats.strava_api import save_strava_activities
@@ -14,7 +14,7 @@ def sync_strava_activities():
     logging.info("syncing strava activities")
     try:
         save_strava_activities("strava_stats/data/activities.json")
-    except requests.exceptions.HTTPError:
+    except HTTPError:
         logging.error("error syncing strava activities")
 
 
