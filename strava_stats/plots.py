@@ -6,7 +6,7 @@ from strava_stats.strava_stats import (
     generate_monthly_distance_binned_data,
 )
 
-def generate_km_per_day_over_year_heatmap(activities: list[dict]):
+def generate_km_per_day_over_year_heatmap(activities: list[dict], color="reds"):
     data = generate_km_per_day_heatmap_data(activities)
 
     fig = px.imshow(
@@ -16,7 +16,7 @@ def generate_km_per_day_over_year_heatmap(activities: list[dict]):
         y=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         text_auto=False,
         aspect="auto",
-        color_continuous_scale="reds"
+        color_continuous_scale=color
     )
 
     zero_entry_text = np.where(np.logical_or(data == 0, np.isnan(data)), "", np.round(data, 2).astype(str))

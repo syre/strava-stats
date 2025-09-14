@@ -21,10 +21,9 @@ from strava_stats.strava_stats import (
     calculate_ride_days,
 )
 from strava_stats.strava_api import load_strava_activities
-from strava_stats.templates import load_reds_template
+from strava_stats.templates import load_reds_template, load_reds_dark_template
 
-pio.templates["reds"] = load_reds_template()
-pio.templates.default = "reds"
+
 
 app = Dash(external_scripts=["https://unpkg.com/@tailwindcss/browser@4"])
 app.title = "Strava Stats 🚲"
@@ -32,6 +31,10 @@ app.title = "Strava Stats 🚲"
 activities = load_strava_activities()
 AVAILABLE_YEARS = sorted(get_strava_activities_years(activities), key=str, reverse=True)
 CURRENT_YEAR = datetime.now().date().year
+DARK_THEME = False
+
+pio.templates["reds"] = load_reds_dark_template() if DARK_THEME else load_reds_template()
+pio.templates.default = "reds"
 
 @callback(
     Output('main-container', 'children'),
@@ -50,7 +53,7 @@ def update_main_container(year, activity_type):
                 html.Div(
                     children=[
                         html.H2("Distance (KM) by Date", className="text-lg font-semibold text-center text-red-700 mb-4"),
-                        dcc.Graph(id='km-per-day-over-year-graph', figure=generate_km_per_day_over_year_heatmap(activities)),
+                        dcc.Graph(id='km-per-day-over-year-graph', figure=generate_km_per_day_over_year_heatmap(activities, color="inferno" if DARK_THEME else "reds")),
                     ],
                     className="max-w-7xl mx-auto px-4 mb-8 rounded shadow"
                 ),
@@ -104,7 +107,7 @@ def update_main_container(year, activity_type):
                                     style={"height": "300px"}
                                 )
                             ],
-                            className="bg-white p-4 rounded shadow overflow-hidden"
+                            className="p-4 rounded shadow overflow-hidden" + " bg-black" if DARK_THEME else " bg-white"
                         ),
                         html.Div(
                             children=[
@@ -115,14 +118,14 @@ def update_main_container(year, activity_type):
                                     style={"height": "300px"}
                                 )
                             ],
-                            className="bg-white p-4 rounded shadow overflow-hidden"
+                            className="p-4 rounded shadow overflow-hidden" + " bg-black" if DARK_THEME else " bg-white"
                         )
                     ]
                 )]
         )
 ]
 
-app.layout = html.Div(children=[
+app.layout = html.Div(className="bg-black" if DARK_THEME else "bg-white", children=[
     html.Div(
         className="max-w-7xl mx-auto px-4 mb-8",
         children=[
