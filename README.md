@@ -32,7 +32,7 @@ curl -X POST \
 Replace `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET`, and `YOUR_CODE` with your actual values.
 
 ## TODO
-- Implement a filter toggling different sports
+- ~Implement a filter toggling different sports~ Sike this is only for bikes
 - Use a real relational database to store and analyze data
 - Add tests
 - Containerize it
