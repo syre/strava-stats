@@ -41,8 +41,8 @@ def get_activities(access_token: str, page=1):
     json_response = response.json()
     return json_response
 
-def save_strava_activities(path: str = 'data/activities.json'):
-    """Saves Strava activities to a JSON file."""
+def save_strava_activities(path: str = 'data/activities.json') -> list[dict]:
+    """Saves Strava activities to a JSON file and return the activities."""
     access_token = get_access_token()
     activities_list = []
     utc_today = datetime.datetime.now(datetime.UTC)
@@ -59,6 +59,8 @@ def save_strava_activities(path: str = 'data/activities.json'):
         earliest_date_found = activities[-1]["start_date"]
         activities_list += activities
     json.dump(activities_list, open(path, 'w'))
+
+    return activities_list
 
 def load_strava_activities(path='data/activities.json') -> list[dict]:
     """Loads saved Strava activities from a JSON file."""

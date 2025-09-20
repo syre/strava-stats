@@ -13,7 +13,8 @@ logging.basicConfig(format='%(asctime)s %(message)s', stream=sys.stdout, level=l
 def sync_strava_activities():
     logging.info("syncing strava activities")
     try:
-        save_strava_activities("strava_stats/data/activities.json")
+        activities = save_strava_activities("strava_stats/data/activities.json")
+        logging.info(f"synced {len(activities)} activities")
     except HTTPError:
         logging.error("error syncing strava activities")
 
