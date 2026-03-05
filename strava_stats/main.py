@@ -39,7 +39,6 @@ def get_theme_colors(is_dark: bool) -> dict:
     if is_dark:
         return {
             "bg_primary": "bg-zinc-950",
-            "bg_secondary": "bg-zinc-900",
             "bg_card": "bg-zinc-900",
             "text_primary": "text-zinc-100",
             "text_secondary": "text-zinc-400",
@@ -52,7 +51,6 @@ def get_theme_colors(is_dark: bool) -> dict:
     else:
         return {
             "bg_primary": "bg-white",
-            "bg_secondary": "bg-gray-50",
             "bg_card": "bg-white",
             "text_primary": "text-gray-900",
             "text_secondary": "text-gray-600",
