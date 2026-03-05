@@ -12,6 +12,7 @@ services:
     image: strava-stats
     container_name: strava-stats-sync
     working_dir: /app
+    env_file: ".env"
     command: ["python", "-m", "strava_stats.scripts.sync_strava_activities"]
     depends_on:
       - strava-stats-app
