@@ -5,7 +5,7 @@ description = "Dash app for visualizing your Strava data"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "dash~=3.2.0",
+    "dash~=4.0.0",
     "numpy~=2.3.1",
     "pandas~=2.3.1",
     "python-dotenv~=1.1.1",
