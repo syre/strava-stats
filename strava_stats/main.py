@@ -233,7 +233,7 @@ def update_app(year, activity_type, is_dark):
     app_container_class = (
         f"{theme_colors['bg_primary']} min-h-screen transition-colors duration-300"
     )
-    header_class = f"max-w-7xl mx-auto px-2 py-4 mb-4 {theme_colors['bg_primary']} rounded-b {theme_colors['shadow']} border-b border-x {theme_colors['border']} transition-colors duration-300"
+    header_class = f"max-w-7xl mx-auto px-2 py-4 mb-4 {theme_colors['bg_card']} rounded-b {theme_colors['shadow']} border-b border-x {theme_colors['border']} transition-colors duration-300"
     footer_class = f"max-w-7xl mx-auto px-2 py-4 text-center {theme_colors['text_secondary']} text-xs mt-6 transition-colors duration-300"
     header_title_class = f"text-4xl font-bold {theme_colors['text_primary']} text-center flex-1 transition-colors duration-300"
 
